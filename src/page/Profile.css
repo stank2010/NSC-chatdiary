@@ -1,0 +1,14 @@
+.Profile div div div{
+  height: 75px;
+  border-bottom: 2px solid gray;
+  padding: 0px;
+}
+
+.Profile div div div input{
+  position: relative;
+  width: 100%;
+}
+
+.Profile div div div label{
+  position: absolute;
+}
