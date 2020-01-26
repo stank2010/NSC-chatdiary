@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { addDiary } from '../redux/action';
 
 class ListDiary extends Component {
 
@@ -30,10 +31,6 @@ class ListDiary extends Component {
 
 const mapStateToProps = (state) => state
 
-const mapDispatchToProps = (dispatch) => {
-
-}
-
-const ListDiarys = connect(mapDispatchToProps, mapStateToProps)(ListDiary)
+const ListDiarys = connect(mapStateToProps)(ListDiary)
 
 export default ListDiarys

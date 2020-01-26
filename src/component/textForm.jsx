@@ -12,18 +12,16 @@ class TextBox extends Component {
     rew_data: this.props.val.data
   }
 
-  constructor(props) {
-    super(props)
-    var cx = this.props.val.pos.x
-    var cy = this.props.val.pos.y
+  componentDidMount() {
+    this.input.focus()
   }
 
   onStart = () => {
-    this.setState({ activeDrags: ++this.state.activeDrags })
+    this.setState({ activeDrags: this.state.activeDrags })
   }
   onStop = () => {
     console.log(this.state.conrolledPosition)
-    this.setState({ activeDrags: ++this.state.activeDrags })
+    this.setState({ activeDrags: this.state.activeDrags })
   }
 
   onControlledDrag = (e, position) => {
@@ -35,9 +33,9 @@ class TextBox extends Component {
     const dragHandlers = { onStart: this.onStart, onStop: this.onStop }
     const { controlledPosition } = this.state
     return (
-      <Draggable axis="x" defaultPosition={{ x: controlledPosition.x, y: controlledPosition.y }} position={controlledPosition} onDrag={this.onControlledDrag} {...dragHandlers}>
-        <div className="card">
-          <h1>Hello World</h1>
+      <Draggable position={controlledPosition} onDrag={this.onControlledDrag} {...dragHandlers}>
+        <div className="card" style={{ width: '50%' }}>
+          <textarea ref={input => { this.input = input }} id="" cols="30" rows="10"></textarea>
         </div>
       </Draggable>
     )

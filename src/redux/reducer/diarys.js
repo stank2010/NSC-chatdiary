@@ -1,4 +1,4 @@
-import { ADD_DIARY, SELECT_DIARY, SAVE_DIARY, DELETE_DIARY } from '../action/index'
+import { ADD_DIARY, SELECT_DIARY, DELETE_DIARY } from '../action/index'
 import { dummy } from './firebaseConnnect'
 
 const diary = (content) => {
@@ -9,10 +9,6 @@ const diary = (content) => {
     D_object: content.object
   }
 }
-
-// function deleteIt (state, content){
-//   const s = state.fillter(con => {return con.id !== })
-// }
 
 const diarys = (state = dummy, action) => {
   switch (action.type) {
@@ -25,8 +21,6 @@ const diarys = (state = dummy, action) => {
       return state.fillter(con => {
         return con.id === action.id
       })
-    // case SAVE_DIARY:
-    //   return deleteIt(state, action.content)
     case DELETE_DIARY:
       return state.fillter(con => {
         return con.id !== action.id
@@ -35,3 +29,5 @@ const diarys = (state = dummy, action) => {
       return state
   }
 }
+
+export default diarys

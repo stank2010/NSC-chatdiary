@@ -39,18 +39,16 @@ class EditDiary extends Component {
 
   handleMouseDown = (e) => {
     e.persist()
-    if (this.state.checkClick) {
-      const texts = this.state.obj2
-      texts.push({
-        id: this.state.objId++,
-        type: "text",
-        pos: {
-          x: 20,
-          y: 20
-        }
-      })
-      this.setState({ obj2: texts, objId: this.state.objId++, checkClick: false })
-    }
+    const texts = this.state.obj2
+    texts.push({
+      id: this.state.objId++,
+      type: "text",
+      pos: {
+        x: 20,
+        y: 20
+      }
+    })
+    this.setState({ obj2: texts, objId: this.state.objId++, checkClick: false })
   }
 
   render() {
@@ -59,9 +57,7 @@ class EditDiary extends Component {
         <div className="card-header">
           <Link to="/mainPage">back</Link>
         </div>
-
-
-        <div className="card-body" onClick={this.handleMouseDown} style={{ "height": "100vh" }}>
+        <div className="card-body" style={{ "height": "100vh" }}>
           {this.state.obj1.map((item, i) => { return <ChatBox val={item} /> })}
           {this.state.obj2.map((item) => { return <TextBox val={item} /> })}
         </div>
@@ -73,7 +69,7 @@ class EditDiary extends Component {
           <div className="row">
             <input type="text" className="form-control" style={{ width: "50%" }} />
             <button className="btn btn-primary" style={{ width: "15%" }}
-              onClick={() => { this.setState({ checkClick: true }) }}
+              onClick={this.handleMouseDown}
             >
               <span className="fas fa-font" />
             </button>
