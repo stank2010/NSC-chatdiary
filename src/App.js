@@ -12,18 +12,10 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          <Route exact path="/"  >
-            <Index />
-          </Route>
-          <Route path="/mainPage">
-            <MainPage />
-          </Route>
-          <Route path="/editDiary">
-            <EditDiary />
-          </Route>
-          <Route path="/profile">
-            <Profile />
-          </Route>
+          <Route exact path="/"  component={Index}/>
+          <Route path="/mainPage" component={MainPage} />
+          <Route path="/editDiary" component={EditDiary}/>
+          <Route path="/profile" component={Profile}/>
         </Switch>
       </Router>
     )

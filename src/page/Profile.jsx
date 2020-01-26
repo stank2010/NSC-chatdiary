@@ -5,7 +5,8 @@ import './Profile.css'
 class Profile extends Component {
   state = {
     name: "Pichet",
-    showName: "Hello World",
+    pass : "",
+    showName: "That is name",
     email: "Fuck@gmail.component",
     status: []
   }
@@ -14,24 +15,33 @@ class Profile extends Component {
       <div className="Profile">
         <Navbar />
         <div className="container text-center">
-          <h1>is a Profile</h1>
+          <h1 className="text-primary">Profile</h1>
           <p>Image</p>
           <p className="display-4" style={{ fontSize: "2.5rem" }}>{this.state.showName}</p>
           <hr />
-          <div style={{ width: "50%", margin: "auto" }}>
-            <div>
-              <label className="label-name" >Name</label>
-              <input type="text" defaultValue={this.state.name} />
+
+          <form style={{ width: "50%", margin: "auto" }}>
+            <div className="form-group">
+              <label className="label-name float-left" >Name    :</label>
+              <input className="form-control" id="U_name" type="text" defaultValue={this.state.name} />
             </div>
-            <div>
-              <label className="label-email">Email</label>
-              <input type="text" defaultValue={this.state.email} />
+
+            {
+              (true)?<div className="form-group">
+                <label className="label-status float-left" >Password  :</label>
+                <input className="form-control" type="text" defaultValue={this.state.status} />
+              </div>:<div></div>
+            }
+            <div className="form-group">
+              <label className="label-email float-left">Email   :</label>
+              <input className="form-control" id="U_email" type="text" defaultValue={this.state.email} />
             </div>
-            <div>
-              <label className="label-status" >Status</label>
-              <input type="" defaultValue={this.state.status} />
+            <div className="form-group">
+              <label className="label-status float-left" >Status  :</label>
+              <input className="form-control" type="text" defaultValue={this.state.status} />
             </div>
-          </div>
+          </form>
+
         </div>
       </div>
     )
