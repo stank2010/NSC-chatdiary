@@ -5,7 +5,7 @@ import EditDiary from "./page/EditDiary"
 import Index from "./page/index"
 import Profile from './page/Profile'
 
-import './App.css';
+// import './App.css';
 
 class App extends Component {
   render() {
