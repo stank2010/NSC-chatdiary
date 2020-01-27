@@ -4,11 +4,13 @@ import Navbar from '../component/navbar'
 import Profile from '../component/profileCard'
 import Textshow from '../component/textShow'
 import ListDiary from '../component/listDiary'
+import {connect} from 'react-redux'
 
 class MainPage extends Component {
   render() {
     return (
       <div>
+        {this.props.valFromStore.U_name /*test pass ค่า redux*/}
         <Navbar></Navbar>
         <Profile></Profile>
         <ListDiary></ListDiary>
@@ -20,5 +22,9 @@ class MainPage extends Component {
     )
   }
 }
-
-export default MainPage
+const mapStateToProps = state =>{
+  return{
+    valFromStore : state.user
+  }
+}
+export default connect(mapStateToProps,null)(MainPage);

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import {connect} from 'react-redux'
 
 class ListDiary extends Component{
     state ={
@@ -55,6 +56,10 @@ class ListDiary extends Component{
         }
     };
 
+    UpdateStore(Val){
+        this.props.edite_state.bind(this,{Diary:Val});
+    }
+
     render(){
     
         return (
@@ -74,7 +79,16 @@ class ListDiary extends Component{
                                                     D_object : []
                                                 }
                                         }
-                                     }>
+                                     }
+                                     onClick={this.props.edite_state.bind(this,{Diary:
+                                        {
+                                        D_id : "",
+                                        D_auther : "",
+                                        D_name : "",
+                                        D_object : []
+                                        }
+                                     })}
+                                     >
                                 <span className="fas fa-plus"></span>Add  
                             </Link>
                         </div>
@@ -90,7 +104,9 @@ class ListDiary extends Component{
                                             pathname:'/editDiary' , 
                                             Diary:item
                                         }
-                                    }>
+                                    }
+                                        onClick={  this.props.edite_state.bind(this,{Diary:item})} 
+                                    >
                                         <span className="fas fa-file" ></span>
                                         <label>{item.D_name}</label> 
                                     </Link>
@@ -111,4 +127,17 @@ class ListDiary extends Component{
     }
 }
 
-export default ListDiary
+const mapStateToProps = state =>{
+    return{
+      valFromStore : state.Diary
+    }
+  }
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+      edite_state:(val)=>{
+        return dispatch({type:'update_state',payload:val});
+      }
+    }
+  }
+export default connect(mapStateToProps,mapDispatchToProps)(ListDiary);

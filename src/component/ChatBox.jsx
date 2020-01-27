@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Draggable from 'react-draggable'
+import {connect} from 'react-redux'
 
 class ChatBox extends Component {
   state = {
@@ -8,7 +9,7 @@ class ChatBox extends Component {
       x: this.props.val.pos.x,
       y: this.props.val.pos.y
     },
-    id: this.props.val.id,
+    id: this.props.val.obj_id,
     raw_data: this.props.val.data
   };
 
@@ -27,8 +28,15 @@ class ChatBox extends Component {
   onControlledDrag = (e, position) => {
     const { x, y } = position;
     this.setState({ controlledPosition: { x, y } });
+    
+    //console.log(this.props.valFromStore);
+    //console.log(this.state);
+    
+    const Diary = this.props.valFromStore;
+    const D_Before = Diary.D_object[this.state.id];
+    D_Before.pos = {x,y};
+    this.props.edite_state.bind(this,{Diary:D_Before});
   };
-
   render() {
     const dragHandlers = { onStart: this.onStart, onStop: this.onStop };
     const { controlledPosition } = this.state;
@@ -56,4 +64,18 @@ class ChatBox extends Component {
   }
 }
 
-export default ChatBox;
+const mapStateToProps = state =>{
+  return{
+    valFromStore : state.Diary
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    edite_state:(val)=>{
+      return dispatch({type:'update_state',payload:val});
+    }
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(ChatBox);

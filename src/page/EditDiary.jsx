@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from "react-router-dom";
 import SplitData from '../component/function'
 import ChatBox from '../component/ChatBox'
+import {connect} from 'react-redux'
 
 class EditDiary extends Component {
   state={
@@ -41,8 +42,9 @@ class EditDiary extends Component {
 
   }
 
-  componentDidMount()
+  componentWillMount()
   {
+    this.props.edite_state.bind(this,{Diary:this.state});
     /*
     this.setState({
       D_id : this.props.location.Diary.D_id,
@@ -50,8 +52,8 @@ class EditDiary extends Component {
       D_name :this.props.location.Diary.D_name ,
       D_object : this.props.location.Diary.D_object
     })*/
-    console.log(this.props.location.Diary);
   }
+
 
   render() {
     return (
@@ -87,4 +89,18 @@ class EditDiary extends Component {
   }
 }
 
-export default EditDiary
+const mapStateToProps = state =>{
+  return{
+    valFromStore : state.Diary
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    edite_state:(val)=>{
+      return dispatch({type:'update_state',payload:val});
+    }
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(EditDiary);
