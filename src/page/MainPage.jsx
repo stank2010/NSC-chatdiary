@@ -10,7 +10,6 @@ class MainPage extends Component {
   render() {
     return (
       <div>
-        {this.props.valFromStore.U_name /*test pass ค่า redux*/}
         <Navbar></Navbar>
         <Profile></Profile>
         <ListDiary></ListDiary>

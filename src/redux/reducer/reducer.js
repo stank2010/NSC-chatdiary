@@ -8,7 +8,8 @@ const initState ={
     user : {
         U_name : "",
         U_pass : "",
-        U_email: ""
+        U_email: "",
+        U_id_diary : []
     }
 }
 
@@ -20,7 +21,7 @@ const reducer = (state=initState , action)=>{
                 ...state,
                 ...action.payload
             };
-            console.log(newState);
+            console.log("Redux-newState",newState);
             return newState;
         default :
             break;

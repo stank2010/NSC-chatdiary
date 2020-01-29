@@ -10,11 +10,13 @@ class ChatBox extends Component {
       y: this.props.val.pos.y
     },
     id: this.props.val.obj_id,
-    raw_data: this.props.val.data
+    raw_data: this.props.val.data,
+    Di : this.props.valFromStore
   };
 
   componentDidMount() {
     console.log(this.state);
+    console.log("ChatBox-Redux-Update",this.state.Di);
   }
 
   onStart = () => {
@@ -27,15 +29,29 @@ class ChatBox extends Component {
 
   onControlledDrag = (e, position) => {
     const { x, y } = position;
-    this.setState({ controlledPosition: { x, y } });
+
     
     //console.log(this.props.valFromStore);
     //console.log(this.state);
     
-    const Diary = this.props.valFromStore;
-    const D_Before = Diary.D_object[this.state.id];
-    D_Before.pos = {x,y};
-    this.props.edite_state.bind(this,{Diary:D_Before});
+    const Diary = this.state.Di;
+    let D_Before = Diary.D_object[this.state.id];
+    
+    console.log("ChatBox_Redux",Diary);
+    //console.log("Diary Before",D_Before,this.state.id);
+    
+    D_Before.pos = {x:x,y:y};
+    Diary.D_object[this.state.id] = D_Before;
+
+    this.props.edite_state.bind(this,{Diary: Diary });
+
+    this.setState({ controlledPosition: { x, y } });
+
+    //Diary = this.props.valFromStore;
+    //console.log("Redux-Update",Diary);
+    //D_Before = Diary.D_object[this.state.id];
+    //console.log("Diary Before2",D_Before,this.state.id);   
+
   };
   render() {
     const dragHandlers = { onStart: this.onStart, onStop: this.onStop };

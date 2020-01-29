@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import ProfilePicture from '../image/Capture.png'
+import {connect} from 'react-redux'
 
 class Profile extends Component {
   state = {
-    username: "Fuking Hero",
-    email: "FK@gmail.com",
+    username: this.props.valFromStore.U_name==""?"(not loging in)": this.props.valFromStore.U_name,
+    email: this.props.valFromStore.U_pass==""?"email": this.props.valFromStore.U_email,
     status: "Single"
   }
   render() {
@@ -31,4 +32,10 @@ class Profile extends Component {
   }
 }
 
-export default Profile
+const mapStateToProps = state =>{
+  return{
+    valFromStore : state.user
+  }
+}
+
+export default connect(mapStateToProps,null)(Profile);

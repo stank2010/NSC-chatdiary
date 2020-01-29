@@ -15,9 +15,9 @@ class EditDiary extends Component {
   showFile = () => {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
          var file = document.querySelector('input[type=file]').files[0];
-         var reader = new FileReader()
+         var reader = new FileReader();
 
-            reader.onload = (event)=> { 
+             reader.onload = (event)=> { 
               var obj = this.state.D_object;
               obj.push({
                 obj_id:obj.length,
@@ -30,37 +30,33 @@ class EditDiary extends Component {
               });
               
               this.setState({D_object:obj});
-              //console.log(obj);
-            }
+            };
          reader.readAsText(file);
-         //console.log(reader);
-         //console.log(reader.result);
-         //console.log(this.state.D_object);
+         
    }else {
       alert("Your browser is too old to support HTML5 File API");
    }
 
   }
+  componentWillUpdate(){
+    const Diary_redux = this.props.valFromStore;
+    Diary_redux.D_object = this.state.D_object;
 
-  componentWillMount()
-  {
-    this.props.edite_state.bind(this,{Diary:this.state});
-    /*
-    this.setState({
-      D_id : this.props.location.Diary.D_id,
-      D_auther :  this.props.location.Diary.D_auther,
-      D_name :this.props.location.Diary.D_name ,
-      D_object : this.props.location.Diary.D_object
-    })*/
+    this.props.edite_state.bind(this, Diary_redux);
+    console.log("edite_state",this.state);
+    console.log("edite_Redux",this.props.valFromStore);
   }
 
+  saveDiary(){ //axios
+    //this.props.edite_state.bind(this,{Diary:this.state});
+  }
 
   render() {
     return (
       <div className="card">
         <div className="card-header">
           <Link to="/mainPage">back</Link>
-          <button className="btn btn-danger float-right"> Save </button>
+          <button className="btn btn-danger float-right" onClick={this.saveDiary} > Save </button>
         </div>
         
 
@@ -98,7 +94,7 @@ const mapStateToProps = state =>{
 const mapDispatchToProps = dispatch => {
   return {
     edite_state:(val)=>{
-      return dispatch({type:'update_state',payload:val});
+      return dispatch({type:'update_state',payload:{Diary:val}});
     }
   }
 }
