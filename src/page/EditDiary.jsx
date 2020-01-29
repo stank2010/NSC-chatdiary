@@ -8,7 +8,6 @@ import TextBox from '../component/textForm'
 class EditDiary extends Component {
   state = {
     obj1: [],
-    obj2: [],
     checkClick: false,
     objId: 0
   };
@@ -39,7 +38,8 @@ class EditDiary extends Component {
 
   handleMouseDown = (e) => {
     e.persist()
-    const texts = this.state.obj2
+    const texts = this.state.obj1
+
     texts.push({
       id: this.state.objId++,
       type: "text",
@@ -48,7 +48,7 @@ class EditDiary extends Component {
         y: 20
       }
     })
-    this.setState({ obj2: texts, objId: this.state.objId++, checkClick: false })
+    this.setState({ obj1: texts, objId: this.state.objId++, checkClick: false })
   }
 
   render() {
@@ -58,8 +58,16 @@ class EditDiary extends Component {
           <Link to="/mainPage">back</Link>
         </div>
         <div className="card-body" style={{ "height": "100vh" }}>
-          {this.state.obj1.map((item, i) => { return <ChatBox val={item} /> })}
-          {this.state.obj2.map((item) => { return <TextBox val={item} /> })}
+          {this.state.obj1.map((item, i) => {
+            switch (item.type) {
+              case 'chat':
+                return <ChatBox val={item} />
+              case 'text':
+                return <TextBox val={item} />
+              default:
+                return null
+            }
+          })}
         </div>
 
         <div className="card-footer fixed-bottom" >
@@ -84,6 +92,9 @@ class EditDiary extends Component {
     )
   }
 }
+
+
+
 EditDiary = connect()(EditDiary)
 
 export default EditDiary
