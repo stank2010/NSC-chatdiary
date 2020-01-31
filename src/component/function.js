@@ -9,8 +9,6 @@ export default function SplitData(Word){
             context:Arr[index].split('\t')[2]
         });
     }
-
-
     for(var i=3;i<Arr.length;i++){
         
         var j=i+1,k=j;
@@ -22,17 +20,11 @@ export default function SplitData(Word){
                 i=j;
                 break;
             }
-            else if(Arr[j]==""){
-                Arr[k]+='\n'+Arr[j];
-            }
-
-
-            if(Arr[j][2]!=":"){
-                Arr[k]+='\n'+Arr[j];
-            }
+            else if(Arr[j]=="")Arr[k]+='\n'+Arr[j];
+            
+            if(Arr[j][2]!=":")Arr[k]+='\n'+Arr[j];
             else
             {
-                //console.log(Arr[k]+"\n===\n");
                 Adding(k);
                 k=j;
             }

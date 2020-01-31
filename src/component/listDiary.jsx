@@ -10,7 +10,7 @@ class ListDiary extends Component{
             U_email : "email",
             U_myDiary : [
                     {
-                        D_id : "01",
+                        D_id : 0,
                         D_auther : "sank",
                         D_name : "Journal",
                         D_object : [
@@ -18,12 +18,24 @@ class ListDiary extends Component{
                                 obj_id: 0,
                                 pos : {x:1,y:1},
                                 type : "chat",
-                                data: {Name:"eiei",data:[]}
+                                data: {Name:"object 1",data:[]}
+                            },
+                            {
+                                obj_id: 1,
+                                pos : {x: 2.1052627563476562, y: -196.8947296142578},
+                                type : "chat",
+                                data: {Name:"object 2",data:[]}
+                            },
+                            {
+                                obj_id: 2,
+                                pos : {x: 1, y: -395.8421173095703},
+                                type : "chat",
+                                data: {Name:"object 3",data:[]}
                             }
                         ]
                     },
                     {
-                        D_id : "02",
+                        D_id : 1,
                         D_auther : "sank",
                         D_name : "Journal2",
                         D_object : [
@@ -36,15 +48,15 @@ class ListDiary extends Component{
                         ]
                     },
                     {
-                        D_id : "03",
+                        D_id : 2,
                         D_auther : "sank",
                         D_name : "Journal3",
                         D_object : [
                             {
                                 obj_id: 0,
                                 pos : {x:1,y:1},
-                                type : "chat",
-                                data: {Name:"eiei",data:[]}
+                                type : "text",
+                                data: {Name:"eiei",data:"[]"}
                             }
                         ]
                     }
@@ -82,10 +94,10 @@ class ListDiary extends Component{
                                      }
                                      onClick={this.props.edite_state.bind(this,{Diary:
                                         {
-                                        D_id : "",
-                                        D_auther : "",
-                                        D_name : "",
-                                        D_object : []
+                                            D_id : "",
+                                            D_auther : "",
+                                            D_name : "",
+                                            D_object : []
                                         }
                                      })}
                                      >
@@ -114,8 +126,6 @@ class ListDiary extends Component{
                             );
                         })
                     }
-                
-                    
                 </div>
                 <div className="card-footer">
                     <div className="float-right">

@@ -23,8 +23,8 @@ class EditDiary extends Component {
                 obj_id:obj.length,
                 type:"chat",
                 pos:{
-                  x:20,
-                  y:20
+                  x:10,
+                  y:10
                 },
                 data: SplitData(event.target.result+"\n")
               });
@@ -51,7 +51,23 @@ class EditDiary extends Component {
     //this.props.edite_state.bind(this,{Diary:this.state});
   }
 
+
+
   render() {
+    const   add_textbox=()=>{
+              var obj = this.state.D_object;
+              obj.push({
+                obj_id:obj.length,
+                type:"text",
+                pos:{
+                  x:10,
+                  y:10
+                },
+                data:{Name:"",data:""}
+              });
+              this.setState({D_object:obj});    
+    }
+
     return (
       <div className="card">
         <div className="card-header">
@@ -70,7 +86,7 @@ class EditDiary extends Component {
           </div>
           <div className="row">
             <input type="text" className="form-control" style={{width:"50%"}} defaultValue={this.state.D_name}/>
-            <button className="btn btn-primary" style={{width:"15%"}}>
+            <button className="btn btn-primary" style={{width:"15%"}} onClick={add_textbox}>
               <span className="fas fa-font"/> 
             </button>
             <button className="btn btn-primary" style={{width:"15%"}} onClick={()=>document.getElementById("files").click()}>

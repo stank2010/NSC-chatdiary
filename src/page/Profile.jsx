@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Navbar from '../component/navbar'
 import './Profile.css'
 import {connect} from 'react-redux'
+import axios from 'axios'
 
 class Profile extends Component {
   state = {
@@ -14,7 +15,7 @@ class Profile extends Component {
   }
 
   U_name_Change(e){
-      this.setState({temp_name:e.target.value});
+    this.setState({temp_name:e.target.value});
   }
 
   U_pass_Change(e){
@@ -25,6 +26,13 @@ class Profile extends Component {
     this.setState({temp_email:e.target.value});   
   }
 
+
+  componentWillUpdate()
+  {
+    
+  }
+  
+
   render() {
     const Editer = this.props.editeUser;
 
@@ -33,7 +41,7 @@ class Profile extends Component {
         <Navbar />
         <div className="container text-center">
           <h1 className="text-primary">Profile</h1>
-          <h4> Welcome {this.state.U_name} </h4>
+          <h4> Welcome {this.props.valFromStore.U_name} </h4>
           <p className="display-4" style={{ fontSize: "2.5rem" }}>{this.props.valFromStore.U_name}</p>
           <hr />
 
@@ -60,22 +68,49 @@ class Profile extends Component {
             (this.props.valFromStore.U_name=="")?
               <button 
                 className="btn btn-primary" 
-                onClick={Editer.bind(this,{
-                  U_name : this.state.temp_name,
-                  U_pass : this.state.temp_pass,
-                  U_email: this.state.temp_email
-                })}
+                onClick={()=>{
+                  Editer({
+                    U_name : this.state.temp_name,
+                    U_pass : this.state.temp_pass,
+                    U_email: this.state.temp_email
+                  })
+                  
+                  this.setState({
+                    U_name : this.props.valFromStore.U_name,
+                    U_pass : this.props.valFromStore.U_pass,
+                    U_email: this.props.valFromStore.U_email
+                  })
+
+                  axios.defaults.baseURL = 'https://us-central1-my-diary-fbs.cloudfunctions.net/app';
+                  axios.defaults.headers.post['Content-Type'] ='application/json';
+                  //axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+                  const senter = this.props.valFromStore;
+                  console.log(senter);
+
+                  axios.post('/addUser',{U_id:100 })
+                  .then((res)=>{console.log(res.data)})
+
+              }}
+              
               >  
                 Register 
               </button>
             :
               <button 
                 className="btn btn-primary"  
-                onClick={Editer.bind(this,{
-                  U_name : this.state.temp_name,
-                  U_pass : this.state.temp_pass,
-                  U_email: this.state.temp_email
-                })}
+                onClick={()=>{     
+                  Editer({
+                    U_name : this.state.temp_name,
+                    U_pass : this.state.temp_pass,
+                    U_email: this.state.temp_email
+                  })
+                  
+                  this.setState({
+                    U_name : this.props.valFromStore.U_name,
+                    U_pass : this.props.valFromStore.U_pass,
+                    U_email: this.props.valFromStore.U_email
+                  })
+              }}
               >  
                 Change
               </button>
