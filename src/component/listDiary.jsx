@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import {connect} from 'react-redux'
-
+import axios from 'axios'
 class ListDiary extends Component{
     state ={
         user:{
@@ -33,32 +33,6 @@ class ListDiary extends Component{
                                 data: {Name:"object 3",data:[]}
                             }
                         ]
-                    },
-                    {
-                        D_id : 1,
-                        D_auther : "sank",
-                        D_name : "Journal2",
-                        D_object : [
-                            {
-                                obj_id: 0,
-                                pos : {x:1,y:1},
-                                type : "chat",
-                                data: {Name:"eiei",data:[]}
-                            }
-                        ]
-                    },
-                    {
-                        D_id : 2,
-                        D_auther : "sank",
-                        D_name : "Journal3",
-                        D_object : [
-                            {
-                                obj_id: 0,
-                                pos : {x:1,y:1},
-                                type : "text",
-                                data: {Name:"eiei",data:"[]"}
-                            }
-                        ]
                     }
 
             ]
@@ -67,6 +41,20 @@ class ListDiary extends Component{
 
         }
     };
+
+    componentDidMount(){
+
+        const Redux_kung = this.props.valFromStore;
+        axios.defaults.baseURL = 'https://us-central1-my-diary-fbs.cloudfunctions.net/app';
+        axios.post('/allDiary/'+Redux_kung.user.U_name)
+        .then((res)=>{
+            const UserKung = this.state.user;
+            UserKung.U_myDiary = [...res.data];
+            this.setState({user:UserKung});
+            console.log(res.data);
+        })        
+        console.log("list from firebase",this.state);
+    }
 
     UpdateStore(Val){
         this.props.edite_state.bind(this,{Diary:Val});
@@ -139,7 +127,7 @@ class ListDiary extends Component{
 
 const mapStateToProps = state =>{
     return{
-      valFromStore : state.Diary
+      valFromStore : state
     }
   }
   

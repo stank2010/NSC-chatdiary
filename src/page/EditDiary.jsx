@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import SplitData from '../component/function'
 import ChatBox from '../component/ChatBox'
 import {connect} from 'react-redux'
+import axios from 'axios'
 
 class EditDiary extends Component {
   state={
@@ -38,19 +39,22 @@ class EditDiary extends Component {
    }
 
   }
-  componentWillUpdate(){
-    const Diary_redux = this.props.valFromStore;
-    Diary_redux.D_object = this.state.D_object;
 
+  componentWillUpdate(){
+    const Diary_redux = this.props.valFromStore.Diary;
+    Diary_redux.D_object = this.state.D_object;
+    Diary_redux.D_id = this.state.D_id;
+    Diary_redux.D_name = this.state.D_name;
+    
     this.props.edite_state.bind(this, Diary_redux);
     console.log("edite_state",this.state);
-    console.log("edite_Redux",this.props.valFromStore);
+    console.log("edite_Redux",this.props.valFromStore.Diary);
   }
 
   saveDiary(){ //axios
     //this.props.edite_state.bind(this,{Diary:this.state});
-  }
 
+  }
 
 
   render() {
@@ -67,12 +71,31 @@ class EditDiary extends Component {
               });
               this.setState({D_object:obj});    
     }
+    const handleChangeD_Name=(e)=>{
+      this.setState({D_id:e.target.value,D_name:e.target.value});  
+    }
 
     return (
       <div className="card">
         <div className="card-header">
           <Link to="/mainPage">back</Link>
-          <button className="btn btn-danger float-right" onClick={this.saveDiary} > Save </button>
+          <button 
+            className="btn btn-danger float-right" 
+            
+            onClick={
+              ()=>{
+                console.log("save",this.state);
+                const Redux_kung = this.props.valFromStore;
+                axios.defaults.baseURL = 'https://us-central1-my-diary-fbs.cloudfunctions.net/app';
+                axios.post('/saveDiary/'+Redux_kung.user.U_name,{
+                  ...Redux_kung.Diary , D_id: this.state.D_id ,D_name:this.state.D_name,D_auther:Redux_kung.user.U_name
+                })
+                .then((res)=>{console.log(res.data);})
+              }
+            } 
+          > 
+            Save 
+          </button>
         </div>
         
 
@@ -85,7 +108,7 @@ class EditDiary extends Component {
             Name<br/>
           </div>
           <div className="row">
-            <input type="text" className="form-control" style={{width:"50%"}} defaultValue={this.state.D_name}/>
+            <input type="text" className="form-control" style={{width:"50%"}} defaultValue={this.state.D_name} onChange={handleChangeD_Name}/>
             <button className="btn btn-primary" style={{width:"15%"}} onClick={add_textbox}>
               <span className="fas fa-font"/> 
             </button>
@@ -103,7 +126,7 @@ class EditDiary extends Component {
 
 const mapStateToProps = state =>{
   return{
-    valFromStore : state.Diary
+    valFromStore : state
   }
 }
 

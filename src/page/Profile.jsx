@@ -8,7 +8,7 @@ class Profile extends Component {
   state = {
     U_name: this.props.valFromStore.U_name,
     U_pass : this.props.valFromStore.U_pass,
-    email: this.props.valFromStore.U_email,
+    U_email: this.props.valFromStore.U_email,
     temp_name : "",
     temp_pass : "",
     temp_email: ""
@@ -76,19 +76,25 @@ class Profile extends Component {
                   })
                   
                   this.setState({
-                    U_name : this.props.valFromStore.U_name,
-                    U_pass : this.props.valFromStore.U_pass,
-                    U_email: this.props.valFromStore.U_email
+                    U_name : this.state.temp_name,
+                    U_pass : this.state.temp_pass,
+                    U_email: this.state.temp_email
                   })
 
                   axios.defaults.baseURL = 'https://us-central1-my-diary-fbs.cloudfunctions.net/app';
-                  axios.defaults.headers.post['Content-Type'] ='application/json';
-                  //axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-                  const senter = this.props.valFromStore;
-                  console.log(senter);
 
-                  axios.post('/addUser',{U_id:100 })
-                  .then((res)=>{console.log(res.data)})
+                  /*
+                  axios.defaults.headers.post['Accept'] ='application/json';
+                  axios.defaults.headers.post['Content-Type'] ='application/json';
+                  axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+                  */
+                  axios.post('/addUser',{
+                    U_id: this.state.temp_name,
+                    U_name : this.state.temp_name,
+                    U_pass : this.state.temp_pass,
+                    U_email: this.state.temp_email
+                })
+                  .then((res)=>{console.log(res.data);})
 
               }}
               
@@ -110,11 +116,21 @@ class Profile extends Component {
                     U_pass : this.props.valFromStore.U_pass,
                     U_email: this.props.valFromStore.U_email
                   })
+
+                  axios.post('/addUser',{
+                    U_id:this.state.U_name,
+                    U_name : this.state.U_name,
+                    U_pass : this.state.U_pass,
+                    U_email: this.state.U_email
+                  })
+                  .then((res)=>{console.log(res.data)})
               }}
               >  
                 Change
               </button>
           }
+
+          <button onClick={()=>console.log(this.props.valFromStore)}> Stank </button>
         </div>
       </div>
     )
